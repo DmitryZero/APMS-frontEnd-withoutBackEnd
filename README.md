@@ -1,12 +1,10 @@
+АСУПД - автоматическая система управления проектной деятельностью. 
+Данная версия урезана - реализован только модуль "Управление проектом" наподобии доски Trello. 
+https://dmitryzero.github.io/APMS-frontEnd-withoutBackEnd/html/project
 
-Деректории проекта:
+Данный проект один из самых первых проектов, потому требует доработок
 
-    все html страницы - "html\" 
-    все css файлы - "css\"
-    все scss файлы - "css\scss\"
-    все js скрипты - "scriptsjs\"
-    изображения:
-        аватары акаунтов - "img\avatars\"
-        фоны для карточек банка проектов - "img\Bg_PB\"
-
-    для того что бы перейти в родительский каталог использовать - "..\{остальной путь}"
+Есть готовый проект, но он завязан на backend (java spring). 
+Ссылки на полный проект:
+Front-End - https://github.com/DmitryZero/APMS-frontend-mock-backend-oldDesign
+BackEnd (написан не мной) - https://github.com/DmitryZero/ASUPD-backend
