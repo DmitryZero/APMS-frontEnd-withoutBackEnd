@@ -5,3 +5,5 @@
 
 Есть готовый проект, но он завязан на backend (java spring)
 Ссылки на полный проект:
+Front-End - https://github.com/DmitryZero/APMS-frontend-mock-backend-oldDesign
+BackEnd (написан не мной) - https://github.com/DmitryZero/ASUPD-backend
