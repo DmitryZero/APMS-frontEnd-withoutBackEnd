@@ -43,42 +43,13 @@
     .user-list small {
       color: #797575
     }
-
-    #cover {
-      position: fixed;
-      height: 100%;
-      width: 100%;
-      top: 0;
-      left: 0;
-      background: #fff;
-      z-index: 9999;
     }
   </style>
 
 </head>
 
 <body id="bodyId">
-  <div id="cover"></div>
-
-  <script src="../scriptsjs/fetchScripts.js"></script>
-  <script type="text/javascript">
-    checkToken()
-      .then((status) => {
-        if (status == false) {
-          document.location.href = "authorization.html";
-          throw new Error('Нет токена пользователя');
-        }
-        if (localStorage.getItem('tokenOfProject') == null) {
-          document.location = 'account.html';
-          throw new Error('Нет токена проекта');
-        }
-      })
-      .then(async () => {
-        await LoadProjectInformation(localStorage.getItem('tokenOfProject'));
-        $("#cover").hide();
-      })
-      .catch(error => { console.log(error); });
-  </script>
+  <script src="../scriptsjs/fetchScripts.js"></script> 
 
   <header>
     <nav class="navbar">
@@ -93,7 +64,7 @@
     <div id="board" class="row-my row flex-nowrap">
       <div id="addColumn" class="add-column">
         <!-- кнопка создать колонку -->
-        <button style="display: none" id="add-column-btn" class="add-column-btn" aria-expanded="false"
+        <button id="add-column-btn" class="add-column-btn" aria-expanded="false"
           onclick="removeClass('create-column', 'display-none')">
           <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
             class="octicon octicon-plus">
@@ -121,7 +92,7 @@
     </div>
     <div class="row justify-content-center mt-3" style="margin-bottom: 10px;">
       <div class="col-sm-4 col-md-12 text-center">
-        <button style="display: none;" id="AddParticipantsOfProject" type="button" class="col-md-10 btn btn-sm btn-primary"
+        <button id="AddParticipantsOfProject" type="button" class="col-md-10 btn btn-sm btn-primary"
           data-bs-toggle="modal" data-bs-target="#AddMembers">
           Добавить участников
         </button>

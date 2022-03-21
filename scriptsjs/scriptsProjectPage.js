@@ -31,7 +31,7 @@ function SaveStatusFunction() {
   for (var i = 0, length = radios.length; i < length; i++) {
     if (radios[i].checked) {
       document.getElementById('inputStatus').value = radios[i].value;
-      EditProject(localStorage.getItem('tokenOfProject'), document.querySelector('#nameOfProject').value, dictOfStatusCard[radios[i].value]);
+      // EditProject(localStorage.getItem('tokenOfProject'), document.querySelector('#nameOfProject').value, dictOfStatusCard[radios[i].value]);
       break;
     }
   }
@@ -63,7 +63,7 @@ function removeClass(id, cls) {
 
 document.querySelector('#nameOfProject').addEventListener('change', (e) => {
   console.log('Было изменено название проекта');
-  EditProject(localStorage.getItem('tokenOfProject'), document.querySelector('#nameOfProject').value, 'IN_PROCESS');
+  // EditProject(localStorage.getItem('tokenOfProject'), document.querySelector('#nameOfProject').value, 'IN_PROCESS');
 });
 
 let addColumnBtn = document.getElementById("createColumn");
@@ -84,8 +84,8 @@ addColumnBtn.addEventListener('click', async () => {
   console.log("Была нажата addColumnBtn");
   var nameOfStage = document.querySelector('#nameColum').value;
   if (nameOfStage == '') nameOfStage = 'Новый этап';
-  let uuidOfStage = await AddStage(nameOfStage); 
-  var stageEntity = new StageForCards(nameOfStage, uuidOfStage);
+  // let uuidOfStage = await AddStage(nameOfStage); 
+  var stageEntity = new StageForCards(nameOfStage, "someId");
   document.querySelector('#nameColum').value = "";
   stageEntity.render();
 });
@@ -154,7 +154,7 @@ class StageForCards {
     this.DeleteColumnBtn.innerText = "Удалить этап";
     if (userRole == "CURATOR") this.DeleteColumnBtn.setAttribute('style', 'display:none');
     this.DeleteColumnBtn.addEventListener('click', async () => {
-      await DeleteStage(this.stageEntity.uuidOfStage, localStorage.getItem('tokenOfProject'));
+      // await DeleteStage(this.stageEntity.uuidOfStage, localStorage.getItem('tokenOfProject'));
       console.log("Была нажата DeleteColumnBtn");
       this.divStage.remove();
     })   
@@ -185,7 +185,7 @@ class StageForCards {
       '<input class="inputProject form-control" value="' + this.stageEntity.title + '"></h3>');
 
     this.divTitle.querySelector('.inputProject').addEventListener('change', async (e) => {      
-      await EditStage(this.stageEntity.uuidOfStage, this.divTitle.querySelector('.inputProject').value);
+      // await EditStage(this.stageEntity.uuidOfStage, this.divTitle.querySelector('.inputProject').value);
     });
 
     //Контейнер в этапе, который содержит текст карточки
@@ -262,7 +262,7 @@ class Card {
       e.stopPropagation(); //Убираем открытие карточки, при нажатии на кнопку внутри карточки
       stageInstance.numberOfCards.querySelector('.number-cards').innerText = Number(stageInstance.numberOfCards.innerText) - 1;
       this.card.remove();
-      DeleteCard(this.cardEntity.id);
+      // DeleteCard(this.cardEntity.id);
       let i = stageInstance.stageEntity.cardList.indexOf(this);
       stageInstance.stageEntity.cardList.splice(i, 1);
       console.log("Была удалена карточка");
@@ -321,7 +321,8 @@ class Card {
         var nameOfCard = ""
         if (this.textAreaOfCardForm.value == "") nameOfCard = "Новая карточка";
         else nameOfCard = this.textAreaOfCardForm.value;
-        var tokenOfCard = await AddCard(stageInstance.stageEntity.uuidOfStage, nameOfCard, '');
+        // var tokenOfCard = await AddCard(stageInstance.stageEntity.uuidOfStage, nameOfCard, '');
+        var tokenOfCard = "someToken";
         var cardParams = {
           id: tokenOfCard,
           name: nameOfCard,
@@ -397,12 +398,12 @@ class Card {
 
     this.divHeader.append(this.closeCardBtn);
 
-    var user = await GetUser(this.cardEntity.lastModifiedUserId);
-    this.divHeader.insertAdjacentHTML('beforeend',
-      '<div class="last-change">' +
-      '<p id = "lastData">Последнее изменение: ' + dateWithTime.format(Date.parse(this.cardEntity.lastChangeDate)) + '</p>' +
-      '<p id = "lastUser">Изменил(а): ' + user['lastName'] + ' ' + user['firstName'] + ' ' + user['patronymic'] + '</p>' +
-      '</div>');
+    // var user = await GetUser(this.cardEntity.lastModifiedUserId);
+    // this.divHeader.insertAdjacentHTML('beforeend',
+    //   '<div class="last-change">' +
+    //   '<p id = "lastData">Последнее изменение: ' + dateWithTime.format(Date.parse(this.cardEntity.lastChangeDate)) + '</p>' +
+    //   '<p id = "lastUser">Изменил(а): ' + user['lastName'] + ' ' + user['firstName'] + ' ' + user['patronymic'] + '</p>' +
+    //   '</div>');
     //================================================================================================//
 
 
@@ -445,7 +446,7 @@ class Card {
     this.textAreaForCard.addEventListener('change', async (e) => {
       this.cardEntity.description = this.textAreaForCard.value;
       this.ContentBtn.click();
-      await EditCard(this.cardEntity.id, this.cardEntity.title, this.cardEntity.status, this.cardEntity.description, this.cardEntity.mark);
+      // await EditCard(this.cardEntity.id, this.cardEntity.title, this.cardEntity.status, this.cardEntity.description, this.cardEntity.mark);
       this.cardEntity.status = "IN_PROCESS";
       this.cardEntity.mark = null;
       lastOpenCard.querySelector('#smallStatus').innerText = dictOfGradingCards[this.cardEntity.status];
@@ -552,13 +553,13 @@ class Card {
       this.statusWindowWrapper.querySelector('#inProcess').addEventListener('click', () => {
         this.divCard.querySelector('#statusOfCard').innerText = dictOfGradingCards['IN_PROCESS'];
         this.cardEntity.status = 'IN_PROCESS';
-        EditCard(this.cardEntity.id, this.cardEntity.title, this.cardEntity.status, this.cardEntity.description, this.cardEntity.mark);
+        // EditCard(this.cardEntity.id, this.cardEntity.title, this.cardEntity.status, this.cardEntity.description, this.cardEntity.mark);
         lastOpenCard.querySelector('#smallStatus').innerText = dictOfGradingCards[this.cardEntity.status];
       });
       this.statusWindowWrapper.querySelector('#Checking').addEventListener('click', () => {
         this.divCard.querySelector('#statusOfCard').innerText = dictOfGradingCards['CHECK_REQUIRED'];
         this.cardEntity.status = 'CHECK_REQUIRED';
-        EditCard(this.cardEntity.id, this.cardEntity.title, this.cardEntity.status, this.cardEntity.description, this.cardEntity.mark);
+        // EditCard(this.cardEntity.id, this.cardEntity.title, this.cardEntity.status, this.cardEntity.description, this.cardEntity.mark);
         lastOpenCard.querySelector('#smallStatus').innerText = dictOfGradingCards[this.cardEntity.status];
       });
       // this.statusWindowWrapper.querySelector('#Completed').addEventListener('click', () => {
@@ -576,7 +577,7 @@ class Card {
     if (userRole == "CURATOR") this.delete.setAttribute('style', 'display:none');
     this.delete.addEventListener('click', async (e) => {
       stageInstance.numberOfCards.querySelector('.number-cards').innerText = Number(stageInstance.numberOfCards.innerText) - 1;
-      DeleteCard(this.cardEntity.id);
+      // DeleteCard(this.cardEntity.id);
       this.card.remove();
       this.divCardContainer.remove();
       let i = stageInstance.stageEntity.cardList.indexOf(this);
@@ -616,8 +617,9 @@ class Card {
     this.saveCommentBtn.innerText = "Сохранить";
     this.saveCommentBtn.addEventListener('click', async () => {
       if (this.textAreaComment.value != "") {
-        var tokenOfComment = await CreateComment(localStorage.getItem('tokenOfProject'), this.cardEntity.id, this.textAreaComment.value);
-        this.cardEntity.commentList.push(new Comment(this.textAreaComment.value, localStorage.getItem('token'), tokenOfComment,
+        // var tokenOfComment = await CreateComment(localStorage.getItem('tokenOfProject'), this.cardEntity.id, this.textAreaComment.value);
+        var tokenOfComment = "someToken";
+        this.cardEntity.commentList.push(new Comment(this.textAreaComment.value, "someToken", tokenOfComment,
           dateWithTime.format(new Date())));
         this.cardEntity.commentList[this.cardEntity.commentList.length - 1].render(this);
         this.textAreaComment.value = "";
@@ -643,12 +645,12 @@ class Card {
   }
 
   async LoadComments() {
-    var listOfComments = await GetAllComments(localStorage.getItem('tokenOfProject'), this.cardEntity.id);
+    // var listOfComments = await GetAllComments(localStorage.getItem('tokenOfProject'), this.cardEntity.id);
 
-    for (var i = 0; i < Object.keys(listOfComments).length; i++) {
-      this.cardEntity.commentList.push(new Comment(listOfComments[i]['content'], listOfComments[i]['userOwnerUuid'], listOfComments[i]['commentId'],
-        dateWithTime.format(Date.parse(listOfComments[i]['dateCreated']))));
-    }
+    // for (var i = 0; i < Object.keys(listOfComments).length; i++) {
+    //   this.cardEntity.commentList.push(new Comment(listOfComments[i]['content'], listOfComments[i]['userOwnerUuid'], listOfComments[i]['commentId'],
+    //     dateWithTime.format(Date.parse(listOfComments[i]['dateCreated']))));
+    // }
   }
 
   async renderComments() {
@@ -667,7 +669,12 @@ class Comment {
   }
 
   async render(cardInstance) {
-    var user = await GetUser(this.userOwnerUuid);
+    // var user = await GetUser(this.userOwnerUuid);
+    var user = {
+      firstName: "Дмитрий",
+      lastName: "Никитин",
+      patronymic: "Алексеевич"
+    }
 
     //Кнопка удалить комментарий
     this.deleteCommentBtn = document.createElement('button');
@@ -790,9 +797,6 @@ function AddNewParticipant(participantParams) {
   }
 }
 
-document.querySelector('#AddParticipantsOfProject').addEventListener('click', () => {
-  LoadAllUsers();
-});
 
 document.querySelector('#sendInvite').addEventListener('click', (e) => {
   AddUsersToMembersOfProject();
@@ -801,10 +805,10 @@ document.querySelector('#sendInvite').addEventListener('click', (e) => {
 
 var details;
 
-document.addEventListener('click', function (e) {
-  if (!details.some(f => f.contains(e.target))) {
-    details.forEach(f => f.removeAttribute('open'));
-  } else {
-    details.forEach(f => !f.contains(e.target) ? f.removeAttribute('open') : '');
-  }
-})
+// document.addEventListener('click', function (e) {
+//   if (!details.some(f => f.contains(e.target))) {
+//     details.forEach(f => f.removeAttribute('open'));
+//   } else {
+//     details.forEach(f => !f.contains(e.target) ? f.removeAttribute('open') : '');
+//   }
+// })

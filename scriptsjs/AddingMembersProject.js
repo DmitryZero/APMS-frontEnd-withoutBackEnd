@@ -110,8 +110,8 @@ async function AddUsersToMembersOfProject() {
         if (user.role == "USER") list_newMembers.push(user);
         else if (user.role == "CURATOR") list_newCurators.push(user);
     });
-    if (roleOfUser == "Manager") await AddConsultants(list_newCurators.map((item) => { return item.id }));
-    if (roleOfUser == "Captain") await AddMembers(list_newMembers.map((item) => { return item.id }));
+    // if (roleOfUser == "Manager") await AddConsultants(list_newCurators.map((item) => { return item.id }));
+    // if (roleOfUser == "Captain") await AddMembers(list_newMembers.map((item) => { return item.id }));
 
     listOfUsersToAdd.forEach(user => {
         AddNewParticipant(user);
